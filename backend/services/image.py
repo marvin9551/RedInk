@@ -57,7 +57,9 @@ class ImageService:
             os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
             "history"
         )
-        os.makedirs(self.history_root_dir, exist_ok=True)
+        # 如果文件夹没有创建，抛出异常，中断
+        if not os.path.exists(self.history_root_dir):
+            raise FileNotFoundError(f"历史记录根目录不存在: {self.history_root_dir}")
 
         # 当前任务的输出目录（每个任务一个子文件夹）
         self.current_task_dir = None
